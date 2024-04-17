@@ -1,14 +1,11 @@
 import { RouterProvider, createBrowserRouter} from "react-router-dom";
 import ListOfFilesPAGE from "./pages/ListOfFilesPAGE";
-import LoginPAGE from "./pages/LoginPAGE";
-import LogoutPAGE from "./pages/LogoutPAGE";
+import LandingPage from "./pages/LandingPAGE";
 
 
 const router = createBrowserRouter([
-    { path: '/',       element: <LoginPAGE/>      },
+    { path: '/',       element: <LandingPage/>    },
     { path: '/files',  element: <ListOfFilesPAGE/>},
-    { path: '/login',  element: <LoginPAGE/>      },
-    { path: '/logout', element: <LogoutPAGE/>     },
 ]);
 
 function App() {    

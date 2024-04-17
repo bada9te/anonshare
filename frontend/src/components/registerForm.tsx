@@ -1,10 +1,10 @@
 import { Button, Card, CardContent, TextField, Typography } from "@mui/material";
 
-export default function LoginForm() {
+export default function RegisterForm() {
     return (
         <Card>
             <CardContent sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', gap: 2 }}>
-                <Typography fontSize={20}>Login</Typography>
+                <Typography fontSize={20}>Register</Typography>
                 <TextField 
                     placeholder="Nickname" 
                     type="text"
@@ -15,7 +15,12 @@ export default function LoginForm() {
                     type="password"
                     label="Password"
                 />
-                <Button type="submit" variant="contained" fullWidth>Login</Button>
+                <TextField 
+                    placeholder="Repeat password" 
+                    type="password"
+                    label="Repeat passwor"
+                />
+                <Button type="submit" variant="contained" fullWidth>Register</Button>
             </CardContent>
         </Card>
     );
