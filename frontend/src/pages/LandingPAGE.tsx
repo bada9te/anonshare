@@ -1,4 +1,4 @@
-import ResponsiveAppBar from "../components/header";
+import ResponsiveAppBar from "../components/header/header";
 
 export default function LandingPage() {
     return (

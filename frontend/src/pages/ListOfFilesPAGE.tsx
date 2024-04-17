@@ -1,5 +1,5 @@
-import ResponsiveAppBar from "../components/header";
-import ListOfFiles from "../components/listOfFiles";
+import ResponsiveAppBar from "../components/header/header";
+import ListOfFiles from "../components/list-of-files/list-of-files";
 
 
 export default function ListOfFilesPAGE() {

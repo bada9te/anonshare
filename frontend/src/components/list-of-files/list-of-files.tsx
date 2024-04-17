@@ -1,5 +1,5 @@
 import { Stack } from "@mui/material";
-import FileComponent from "./file";
+import FileComponent from "../file/file";
 
 const files = [
     {

@@ -22,9 +22,20 @@ const deleteFileById = async(id) => {
     return await MFile.deleteById(id);
 }
 
+// get files by owner
+const getFilesByOwner = async(ownerId) => {
+    return await MFile.find({ owner: ownerId });
+}
+
+const getFileById = async(id) => {
+    return await MFile.findOneById(id);
+}
+
 
 module.exports = {
     createFile,
     updatePasswordById,
     deleteFileById,
+    getFilesByOwner,
+    getFileById,
 }

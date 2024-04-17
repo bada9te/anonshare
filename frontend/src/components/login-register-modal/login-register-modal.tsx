@@ -7,8 +7,8 @@ import TabContext from '@mui/lab/TabContext';
 /* @ts-ignore */
 import Identicon from 'react-identicons';
 import { TabList, TabPanel } from "@mui/lab";
-import LoginForm from "./loginForm";
-import RegisterForm from "./registerForm";
+import LoginForm from "../login-form/login-form";
+import RegisterForm from "../register-form/register-form";
 
 
 
@@ -26,7 +26,6 @@ export default function LoginRegisterModal(props: {
     const handleChange = (event: React.SyntheticEvent, newValue: string) => {
         setValue(newValue);
     };
-
 
     return (
         <>

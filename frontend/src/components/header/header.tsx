@@ -12,7 +12,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { useNavigate } from 'react-router-dom';
-import LoginRegisterModal from './loginRegisterModal';
+import LoginRegisterModal from '../login-register-modal/login-register-modal';
 
 const pages = ['Files'];
 const settings = ['Login', 'Logout'];

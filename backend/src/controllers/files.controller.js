@@ -57,8 +57,40 @@ const deleteFileById = async(req, res, next) => {
 }
 
 
+// by owner
+const getFilesByOwnerId = async(req, res, next) => {
+    const { ownerId } = req.query;
+
+    try {
+        const files = await filesModel.getFilesByOwner(ownerId);
+        return res.status(200).json({
+            files,
+            ok: true,
+        })
+    } catch (error) {
+        return next(error);
+    }
+}
+
+// by id
+const getFileById = async(req, res, next) => {
+    const { id } = req.query;
+    try {
+        const file = await filesModel.getFileById(id);
+        return res.status(200).json({
+            file,
+            ok: true,
+        })
+    } catch (error) {
+        return next(error);
+    }
+}
+
+
 module.exports = {
     createFile,
     updateFilePassword,
     deleteFileById,
+    getFilesByOwnerId,
+    getFileById,
 }
