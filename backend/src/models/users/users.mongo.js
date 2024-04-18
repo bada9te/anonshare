@@ -10,6 +10,10 @@ const usersSchema = mongoose.Schema({
         type: String,
         required: true,
     },
+    refreshToken: {
+        type: String,
+        required: false,
+    },
     files: {
         type: [{
             type: mongoose.Schema.Types.ObjectId,

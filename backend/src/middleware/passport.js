@@ -1,14 +1,13 @@
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt  = require('passport-jwt').ExtractJwt;
 const User        = require("../models/users/users.mongo");
+require("dotenv").config();
 
 
 module.exports = (passport) => {
     var opts = {}
     opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-    opts.secretOrKey = 's1';
-    opts.issuer      = 's2';
-    opts.audience    = 's3';
+    opts.secretOrKey    = process.env.JWT_SECRET;
     
     // used to serialize the user for the session
     passport.serializeUser(function(user, done) {
@@ -21,7 +20,7 @@ module.exports = (passport) => {
     });
     
     passport.use(new JwtStrategy(opts, async function(jwt_payload, done) {
-        await User.findOne({id: jwt_payload.sub})
+        await User.find({ _id: jwt_payload._id })
             .then(user => {
                 if (user) {
                     return done(null, user);

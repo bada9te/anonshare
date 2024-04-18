@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const endpoint = `${REACT_APP_SERVER_BASE}/users`;
+const endpoint = `${process.env.REACT_APP_SERVER_BASE}/users`;
 
 
 const httpCreateUser = async(user) => {

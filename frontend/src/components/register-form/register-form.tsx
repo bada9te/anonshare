@@ -1,5 +1,8 @@
 import { Button, Card, CardContent, TextField, Typography } from "@mui/material";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { registerUser } from "../baseSlice";
+import { UnknownAction } from "@reduxjs/toolkit";
 
 
 type Inputs = {
@@ -11,10 +14,12 @@ type Inputs = {
 
 export default function RegisterForm() {
     const { register, handleSubmit, formState: { errors }, getValues } = useForm<Inputs>();
+    const dispatch = useDispatch();
 
 
     const onSubmit: SubmitHandler<Inputs> = async(data) => {
-        console.log(data)
+        // console.log(data)
+        dispatch(registerUser({ nick: data.Nickname, password: data.Password }) as unknown as UnknownAction);
     }
 
     return (
@@ -25,6 +30,8 @@ export default function RegisterForm() {
                     placeholder="Nickname" 
                     type="text"
                     label="Nickname"
+                    error={Boolean(errors.Nickname)}
+                    helperText={errors.Nickname && "Min length must be 4"}
                     {...register("Nickname", {
                         minLength: 4,
                         required: true,
@@ -34,6 +41,9 @@ export default function RegisterForm() {
                     placeholder="Password" 
                     type="password"
                     label="Password"
+                    autoComplete='off'
+                    error={Boolean(errors.Password)}
+                    helperText={errors.Nickname && "Min length must be 4"}
                     {...register("Password", {
                         minLength: 4,
                         required: true,
@@ -42,7 +52,9 @@ export default function RegisterForm() {
                 <TextField 
                     placeholder="Repeat password" 
                     type="password"
+                    autoComplete='off'
                     label="Repeat password"
+                    error={Boolean(errors.ConfirmPassword)}
                     {...register("ConfirmPassword", {
                         minLength: 4,
                         required: true,

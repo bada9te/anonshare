@@ -12,7 +12,8 @@ export default function LoginForm() {
     const { register, handleSubmit, formState: { errors } } = useForm<Inputs>();
 
     const onSubmit: SubmitHandler<Inputs> = async(data) => {
-        console.log(data)
+        // console.log(data)
+        
     }
 
     return (
@@ -35,8 +36,8 @@ export default function LoginForm() {
                     placeholder="Password" 
                     type="password"
                     label="Password"
+                    autoComplete='off'
                     error={Boolean(errors.Password)}
-                    autoFocus
                     helperText={errors.Password && "Min length must be 4"}
                     {...register("Password", {
                         minLength: 4,

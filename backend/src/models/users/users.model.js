@@ -9,8 +9,27 @@ const getUserById = async(id) => {
     return await User.findOneById(id);
 }
 
+const getUserByNickname = async(nick) => {
+    return await User.findOne({ nick });
+}
+
+const setRefreshTokenById = async(id, refTok) => {
+    return await User.findOneAndUpdate(
+        { _id: id },
+        { refreshToken: refTok },
+        { new: true }
+    );
+}
+
+const getByRefreshToken = async(refTok) => {
+    return await User.find({ refreshToken: refTok });
+}
+
 
 module.exports = {
     createUser,
     getUserById,
+    getUserByNickname,
+    setRefreshTokenById,
+    getByRefreshToken,
 };
