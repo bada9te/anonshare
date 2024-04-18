@@ -1,5 +1,9 @@
 import { Button, Card, CardContent, TextField, Typography } from "@mui/material";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../baseSlice";
+import { UnknownAction } from "@reduxjs/toolkit";
+import { setIsShowing } from "../login-register-modal/loginRegisterModalSlice";
 
 
 type Inputs = {
@@ -10,10 +14,13 @@ type Inputs = {
 
 export default function LoginForm() {
     const { register, handleSubmit, formState: { errors } } = useForm<Inputs>();
+    const dispath = useDispatch();
 
     const onSubmit: SubmitHandler<Inputs> = async(data) => {
         // console.log(data)
         
+        dispath(loginUser({ nick: data.Nickname, password: data.Password }) as unknown as UnknownAction);
+        dispath(setIsShowing(false));
     }
 
     return (

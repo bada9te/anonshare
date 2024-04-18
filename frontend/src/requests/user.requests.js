@@ -13,7 +13,23 @@ const httpgetUserById = async(id) => {
     });
 }
 
+const httploginUser = async(user) => {
+    return await axios.post(`${endpoint}/login`, { user });
+}
+
+const httpGetNewToken = async(refreshToken) => {
+    return await axios.post(`${endpoint}/refresh`, { refreshToken })
+}
+
+const httpLogoutUser = async(refreshToken) => {
+    return await axios.post(`${endpoint}/logout`, { refreshToken })
+}
+
+
 export {
     httpCreateUser,
     httpgetUserById,
+    httploginUser,
+    httpGetNewToken,
+    httpLogoutUser
 };

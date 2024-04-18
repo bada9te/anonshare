@@ -1,4 +1,4 @@
-import { Box, Button, IconButton, Tab, Dialog } from "@mui/material";
+import { Box, Button, IconButton, Tab, Dialog, DialogContent } from "@mui/material";
 import { useState } from "react";
 import * as React from 'react';
 import TabContext from '@mui/lab/TabContext';
@@ -9,17 +9,21 @@ import Identicon from 'react-identicons';
 import { TabList, TabPanel } from "@mui/lab";
 import LoginForm from "../login-form/login-form";
 import RegisterForm from "../register-form/register-form";
+import { useDispatch, useSelector } from "react-redux";
+import { IRootState } from "../../redux/store";
+import { setIsShowing } from "./loginRegisterModalSlice";
 
 
 
 export default function LoginRegisterModal(props: {
-    type: "Login" | "Register",
     isLoggedIn: boolean
 }) {
-    const { type, isLoggedIn } = props;
-    const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const { isLoggedIn } = props;
+    const isShowing = useSelector((state: IRootState) => state.authModal.isShowing);
+    const dispatch = useDispatch();
+
+    const handleOpen = () => dispatch(setIsShowing(true));
+    const handleClose = () => dispatch(setIsShowing(false));
 
     const [value, setValue] = React.useState('1');
 
@@ -45,20 +49,29 @@ export default function LoginRegisterModal(props: {
                 })()
             }
             
-            <Dialog onClose={handleClose} open={open} 
+            <Dialog onClose={handleClose} open={isShowing} 
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <TabContext value={value}>
-                    <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                    <TabList onChange={handleChange} aria-label="lab API tabs example">
-                        <Tab label="Login" value="1" />
-                        <Tab label="Register" value="2" />
-                    </TabList>
-                    </Box>
-                    <TabPanel value="1"><LoginForm/></TabPanel>
-                    <TabPanel value="2"><RegisterForm/></TabPanel>
-                </TabContext>
+                {
+                    isLoggedIn
+                    ?
+                    <DialogContent>
+                        <Button variant="contained">Logout</Button>
+                    </DialogContent>
+                    :
+                    <TabContext value={value}>
+                        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                        <TabList onChange={handleChange} aria-label="lab API tabs example">
+                            <Tab label="Login" value="1" />
+                            <Tab label="Register" value="2" />
+                        </TabList>
+                        </Box>
+                        <TabPanel value="1"><LoginForm/></TabPanel>
+                        <TabPanel value="2"><RegisterForm/></TabPanel>
+                    </TabContext>
+                    
+                }
             </Dialog>
         </>
     );

@@ -3,6 +3,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { registerUser } from "../baseSlice";
 import { UnknownAction } from "@reduxjs/toolkit";
+import { setIsShowing } from "../login-register-modal/loginRegisterModalSlice";
 
 
 type Inputs = {
@@ -20,6 +21,7 @@ export default function RegisterForm() {
     const onSubmit: SubmitHandler<Inputs> = async(data) => {
         // console.log(data)
         dispatch(registerUser({ nick: data.Nickname, password: data.Password }) as unknown as UnknownAction);
+        dispatch(setIsShowing(false));
     }
 
     return (

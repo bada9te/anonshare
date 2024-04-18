@@ -8,33 +8,27 @@ import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { useNavigate } from 'react-router-dom';
 import LoginRegisterModal from '../login-register-modal/login-register-modal';
+import { useSelector } from 'react-redux';
+import { IRootState } from '../../redux/store';
 
 const pages = ['Files'];
 const settings = ['Login', 'Logout'];
 
 function ResponsiveAppBar() {
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
-    const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const accessToken = useSelector((state: IRootState) => state.base.accessToken)
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
     };
-    const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorElUser(event.currentTarget);
-    };
 
     const handleCloseNavMenu = () => {
         setAnchorElNav(null);
-    };
-
-    const handleCloseUserMenu = () => {
-        setAnchorElUser(null);
     };
 
     const handleNavigate = (page: string) => {
@@ -131,12 +125,7 @@ function ResponsiveAppBar() {
                 </Button>
                 ))}
             </Box>
-
-            
-                
-                    <LoginRegisterModal type='Login' isLoggedIn={false}/>
-                
-            
+                <LoginRegisterModal isLoggedIn={accessToken.length > 0}/>
             </Toolbar>
         </Container>
         </AppBar>
