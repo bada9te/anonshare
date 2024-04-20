@@ -82,6 +82,7 @@ const getNewToken = async(req, res, next) => {
         return res.status(200).json({
             ok: true,
             token: newToken,
+            user: { ...user._doc }
         });
     } catch (error) {
         return next(error);
@@ -104,9 +105,9 @@ const logoutUser = async(req, res, next) => {
         await usersModel.setRefreshTokenById(null);
         return res.status(200).json({
             ok: true,
-        })
+        });
     } catch (error) {
-        return next(error)
+        return next(error);
     }
 }
 

@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { httpCreateUser, httploginUser } from "../requests/user.requests";
+import { httpCreateUser, httpGetNewToken, httploginUser } from "../requests/user.requests";
+import Cookies from 'js-cookie';
 
 
 const initialState = {
@@ -26,6 +27,13 @@ export const loginUser = createAsyncThunk(
     }
 )
 
+export const refreshToken = createAsyncThunk(
+    'BASE_SLICE/refresh-token',
+    async(token: string) => {
+        return await httpGetNewToken(token);
+    }
+);
+
 
 const baseSlice = createSlice({
     name: "BASE_SLICE",
@@ -41,6 +49,12 @@ const baseSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(loginUser.fulfilled, (state, action) => {
+                /* @ts-ignore */
+                state.user = action.payload.data.user;
+                state.accessToken = action.payload.data.token;
+                Cookies.set('token', action.payload.data.refreshToken, { expires: 7, secure: true });
+            })
+            .addCase(refreshToken.fulfilled, (state, action) => {
                 /* @ts-ignore */
                 state.user = action.payload.data.user;
                 state.accessToken = action.payload.data.token;

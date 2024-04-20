@@ -22,7 +22,7 @@ const setRefreshTokenById = async(id, refTok) => {
 }
 
 const getByRefreshToken = async(refTok) => {
-    return await User.find({ refreshToken: refTok });
+    return await User.findOne({ refreshToken: refTok });
 }
 
 

@@ -1,4 +1,4 @@
-import { Fab, Stack } from "@mui/material";
+import { Fab, Stack, Typography } from "@mui/material";
 import FileComponent from "../file/file";
 import { Add } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
@@ -27,29 +27,37 @@ export default function ListOfFiles() {
         if (userId.length > 0) {
             dispatch(fetchListOfFiles() as unknown as UnknownAction);
         }
-    }, [userId]);
+    }, [userId, dispatch]);
 
     return (
         <>
-            <FileUploadModal isLoggedIn={accessToken.length > 0}/>
-            <FileShareModal/>
-            <Stack p={3} flexWrap="wrap" gap={3} display="flex" justifyContent="center" alignItems="space-around" flexDirection="row">
-                {
-                    files.map((file: TFileFromServer, key) => {
-                        console.log(file)
-                        return <FileComponent 
-                            key={key} 
-                            _id={file._id}
-                            name={file.fileName}
-                            createdAt={file.createdAt}
-                            password={file.password}
-                        />
-                    })
-                }
-            </Stack>
-            <Fab color="primary" aria-label="add" sx={{ position: 'fixed', bottom: '15px', right: '15px' }} onClick={showUploadModal}>
-                <Add />
-            </Fab>
+            {
+                userId.length > 0
+                ?
+                <>
+                    <FileUploadModal isLoggedIn={accessToken.length > 0}/>
+                    <FileShareModal/>
+                    <Stack p={3} flexWrap="wrap" gap={3} display="flex" justifyContent="center" alignItems="space-around" flexDirection="row">
+                        {
+                            files.map((file: TFileFromServer, key) => {
+                                console.log(file)
+                                return <FileComponent 
+                                    key={key} 
+                                    _id={file._id}
+                                    name={file.fileName}
+                                    createdAt={file.createdAt}
+                                    password={file.password}
+                                />
+                            })
+                        }
+                    </Stack>
+                    <Fab color="primary" aria-label="add" sx={{ position: 'fixed', bottom: '15px', right: '15px' }} onClick={showUploadModal}>
+                        <Add />
+                    </Fab>
+                </>
+                :
+                <Typography fontSize={40}>Not authenticated</Typography>
+            }
         </>
     );
 }

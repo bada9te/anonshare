@@ -1,9 +1,12 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { httpCreateFile, httpGetFilesByOwnerId, httpUpdateFilePassword } from "../../requests/file.requests";
+import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
+import { httpCreateFile, httpDeleteFile, httpGetFilesByOwnerId, httpUpdateFilePassword } from "../../requests/file.requests";
 import { IRootState } from "../../redux/store";
+import { TFileFromServer } from "./types";
 
 
-const initialState = {
+const initialState: {
+    files: TFileFromServer[];
+} = {
     files: [],
 }
 
@@ -28,6 +31,21 @@ export const fetchListOfFiles = createAsyncThunk(
     }
 );
 
+export const downloadFIle = createAsyncThunk(
+    'LIST_OF_FILES/download',
+    async(fileId: string) => {
+        // TODO: download file http handler
+        // return await 
+    }
+);
+
+export const deleteFile = createAsyncThunk(
+    'LIST_OF_FILES/delete', 
+    async(fileId: string) => {
+        return await httpDeleteFile(fileId);
+    }
+);
+
 
 const listOfFilesSlice = createSlice({
     name: "LIST_OF_FILES",
@@ -46,6 +64,10 @@ const listOfFilesSlice = createSlice({
             .addCase(fetchListOfFiles.fulfilled, (state, action) => {
                 /* @ts-ignore */
                 state.files = action.payload.data.files
+            })
+            .addCase(deleteFile.fulfilled, (state, action) => {
+                const files = JSON.parse(JSON.stringify(current(state.files))) as TFileFromServer[];
+                state.files = files.filter(file => file._id !== action.meta.arg);
             })
     }
 });
