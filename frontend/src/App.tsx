@@ -1,11 +1,9 @@
 import { RouterProvider, createBrowserRouter} from "react-router-dom";
 import ListOfFilesPAGE from "./pages/ListOfFilesPAGE";
-import LandingPage from "./pages/LandingPAGE";
 
 
 const router = createBrowserRouter([
-    { path: '/',       element: <LandingPage/>    },
-    { path: '/files',  element: <ListOfFilesPAGE/>},
+    { path: '/',  element: <ListOfFilesPAGE/>},
 ]);
 
 function App() {    

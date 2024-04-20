@@ -44,7 +44,7 @@ const loginUser = async(req, res, next) => {
         const refreshToken = crypto.randomBytes(64).toString('hex');
         await usersModel.setRefreshTokenById(userDT._id, refreshToken);
         
-        console.log(userDT)
+        //console.log(userDT)
         const token = jwt.sign(
             { _id: userDT._id },
             process.env.JWT_SECRET,

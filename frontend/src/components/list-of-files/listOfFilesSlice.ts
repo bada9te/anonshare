@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { httpCreateFile } from "../../requests/file.requests";
+import { httpCreateFile, httpGetFilesByOwnerId, httpUpdateFilePassword } from "../../requests/file.requests";
+import { IRootState } from "../../redux/store";
 
 
 const initialState = {
@@ -13,6 +14,20 @@ export const createFile = createAsyncThunk(
     }
 );
 
+export const updatePassPhrase = createAsyncThunk(
+    'LIST_OF_FILES/update-passphrase',
+    async(input: {fileId: string, pass: string}) => {
+        return await httpUpdateFilePassword(input.pass, input.fileId);
+    }
+);
+
+export const fetchListOfFiles = createAsyncThunk(
+    'LIST_OF_FILES/fetch',
+    async(_, thunkApi) => {
+        return await httpGetFilesByOwnerId((thunkApi.getState() as IRootState).base.user._id);
+    }
+);
+
 
 const listOfFilesSlice = createSlice({
     name: "LIST_OF_FILES",
@@ -21,6 +36,17 @@ const listOfFilesSlice = createSlice({
         setFiles: (state, action) => {
             state.files = action.payload;
         }
+    },
+    extraReducers: builder => {
+        builder
+            .addCase(createFile.fulfilled, (state, action) => {
+                /* @ts-ignore */
+                state.files.push(action.payload.data.file)
+            })
+            .addCase(fetchListOfFiles.fulfilled, (state, action) => {
+                /* @ts-ignore */
+                state.files = action.payload.data.files
+            })
     }
 });
 

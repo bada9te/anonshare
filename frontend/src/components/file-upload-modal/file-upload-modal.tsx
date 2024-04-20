@@ -37,11 +37,11 @@ export default function FileUploadModal(props: {
         setDragIsOver(false);
 
         // Fetch the file
-        // e.dataTransfer.files[0]
         dispatch(createFile({
             file: e.dataTransfer.files[0], 
             ownerId: userId
         }) as unknown as UnknownAction);
+        dispatch(setIsShowing(false));
     }
 
 
