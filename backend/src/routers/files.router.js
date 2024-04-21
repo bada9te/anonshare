@@ -9,6 +9,8 @@ filesRouter.post('/create', upload.single("file"), filesController.createFile);
 filesRouter.post('/new-passwd', filesController.updateFilePassword);
 filesRouter.post('/delete', filesController.deleteFileById);
 
+filesRouter.get('/download', filesController.downloadFile);
+
 filesRouter.get('/id', filesController.getFileById);
 filesRouter.get('/owner', filesController.getFilesByOwnerId);
 

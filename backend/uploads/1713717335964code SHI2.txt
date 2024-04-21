@@ -1,0 +1,69 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.datasets import load_iris
+from sklearn.cluster import KMeans
+from sklearn.metrics import accuracy_score, silhouette_score
+from sklearn.cluster import AgglomerativeClustering
+
+# Завантаження даних iris
+iris = load_iris()
+X = iris.data
+y = iris.target
+
+# Побудова графіків розподілу значень ознак
+plt.figure(figsize=(12, 10))
+
+# Створення комбінацій ознак для графіків
+combinations = [(0, 1), (0, 2), (0, 3), (1, 2), (1, 3), (2, 3)]
+colors = ['blue', 'green', 'red']
+
+for i, (feat1, feat2) in enumerate(combinations, 1):
+    plt.subplot(3, 2, i)
+    for target, color in zip(range(len(iris.target_names)), colors):
+        plt.scatter(X[y == target, feat1], X[y == target, feat2], c=color, label=iris.target_names[target])
+    plt.xlabel(iris.feature_names[feat1])
+    plt.ylabel(iris.feature_names[feat2])
+    plt.legend()
+
+plt.tight_layout()
+plt.show()
+
+# Кластеризація даних за допомогою KMeans
+kmeans = KMeans(n_clusters=3, random_state=42)
+kmeans.fit(X)
+kmeans_labels = kmeans.labels_
+
+# Показати результат кластеризації KMeans на графіку
+plt.figure(figsize=(8, 6))
+sns.scatterplot(x=X[:, 0], y=X[:, 1], hue=kmeans_labels, palette='viridis', legend='full')
+plt.title('KMeans Clustering')
+plt.xlabel('Sepal Length')
+plt.ylabel('Sepal Width')
+plt.show()
+
+# Оцінка кластеризації KMeans
+accuracy_kmeans = accuracy_score(y, kmeans_labels)
+silhouette_kmeans = silhouette_score(X, kmeans_labels)
+
+print(f'Accuracy of KMeans: {accuracy_kmeans}')
+print(f'Silhouette Score of KMeans: {silhouette_kmeans}')
+
+# Кластеризація даних за допомогою ієрархічної кластеризації
+agg_clustering = AgglomerativeClustering(n_clusters=3)
+agg_labels = agg_clustering.fit_predict(X)
+
+# Показати результат ієрархічної кластеризації на графіку
+plt.figure(figsize=(8, 6))
+sns.scatterplot(x=X[:, 0], y=X[:, 1], hue=agg_labels, palette='viridis', legend='full')
+plt.title('Agglomerative Clustering')
+plt.xlabel('Sepal Length')
+plt.ylabel('Sepal Width')
+plt.show()
+
+# Оцінка ієрархічної кластеризації
+accuracy_agg = accuracy_score(y, agg_labels)
+silhouette_agg = silhouette_score(X, agg_labels)
+
+print(f'Accuracy of Agglomerative Clustering: {accuracy_agg}')
+print(f'Silhouette Score of Agglomerative Clustering: {silhouette_agg}')

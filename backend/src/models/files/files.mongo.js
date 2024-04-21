@@ -7,11 +7,16 @@ const filesSchema = mongoose.Schema({
         required: true,
     },
     password: {
-        type: String
+        type: String,
     },
     fileName: {
         type: String,
-        required: true
+        required: true,
+    },
+    isSharing: {
+        type: Boolean,
+        required: true,
+        default: false,
     }
 }, {timestamps: true});
 

@@ -1,3 +1,4 @@
+
 import axios from "axios"
 
 const endpoint = `${process.env.REACT_APP_SERVER_BASE}/files`;
@@ -14,8 +15,8 @@ const httpUpdateFilePassword = async(password, fileId) => {
     return await axios.post(`${endpoint}/new-passwd`, { password, fileId });
 }
 
-const httpDeleteFile = async(fileId) => {
-    return await axios.post(`${endpoint}/delete`, { fileId });
+const httpDeleteFile = async(fileId, name) => {
+    return await axios.post(`${endpoint}/delete`, { fileId, name });
 }
 
 const httpGetFileById = async(id) => {

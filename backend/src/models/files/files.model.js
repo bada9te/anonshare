@@ -13,13 +13,24 @@ const updatePasswordById = async(id, newPassword) => {
     }, {
         password: newPassword,
     }, {
-        new: true
+        new: true,
+    });
+}
+
+// set is sahring
+const setIsSharing = async(id, enable) => {
+    return await MFile.findOneAndUpdate({
+        _id: id,
+    }, {
+        isSharing: enable,
+    }, {
+        new: true,
     });
 }
 
 // delete
 const deleteFileById = async(id) => {
-    return await MFile.deleteById(id);
+    return await MFile.findByIdAndDelete(id);
 }
 
 // get files by owner
@@ -35,6 +46,7 @@ const getFileById = async(id) => {
 module.exports = {
     createFile,
     updatePasswordById,
+    setIsSharing,
     deleteFileById,
     getFilesByOwner,
     getFileById,

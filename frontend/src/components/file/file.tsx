@@ -6,6 +6,8 @@ import Typography from '@mui/material/Typography';
 import { useDispatch } from 'react-redux';
 import { setIsShowing } from '../file-share-modal/fileShareModalSlice';
 import { setSelectedFileId } from '../baseSlice';
+import { deleteFile } from '../list-of-files/listOfFilesSlice';
+import { UnknownAction } from '@reduxjs/toolkit';
 
     
 
@@ -22,6 +24,11 @@ export default function FileComponent(props: {
         dispatch(setIsShowing(true));
         dispatch(setSelectedFileId(_id));
     }
+
+    const handleFileDelete = () => {
+        dispatch(deleteFile({fileId: _id, name}) as unknown as UnknownAction);
+    }
+
 
     return (
         <Card sx={{ minWidth: 290 }}>
@@ -40,8 +47,8 @@ export default function FileComponent(props: {
             </Typography>
         </CardContent>
         <CardActions>
-            <Button variant='contained' color='primary' size="small">Download</Button>
-            <Button variant='contained' color='error' size="small">Delete</Button>
+            <Button variant='contained' color='primary' size="small" href={`${process.env.REACT_APP_SERVER_BASE}/files/download?name=${name}`}>Download</Button>
+            <Button variant='contained' color='error' size="small" onClick={handleFileDelete}>Delete</Button>
             <Button variant='contained' color='secondary' size="small" onClick={handleFileShare}>Share</Button>
         </CardActions>
         </Card>

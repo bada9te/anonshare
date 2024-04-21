@@ -31,18 +31,10 @@ export const fetchListOfFiles = createAsyncThunk(
     }
 );
 
-export const downloadFIle = createAsyncThunk(
-    'LIST_OF_FILES/download',
-    async(fileId: string) => {
-        // TODO: download file http handler
-        // return await 
-    }
-);
-
 export const deleteFile = createAsyncThunk(
     'LIST_OF_FILES/delete', 
-    async(fileId: string) => {
-        return await httpDeleteFile(fileId);
+    async(input: {fileId: string, name: string}) => {
+        return await httpDeleteFile(input.fileId, input.name);
     }
 );
 
@@ -58,8 +50,10 @@ const listOfFilesSlice = createSlice({
     extraReducers: builder => {
         builder
             .addCase(createFile.fulfilled, (state, action) => {
+                const f = action.payload.data.file;
                 /* @ts-ignore */
-                state.files.push(action.payload.data.file)
+                console.log(action.payload.data)
+                state.files.push({...f, fileName: f.filename, _id: action.payload.data._id})
             })
             .addCase(fetchListOfFiles.fulfilled, (state, action) => {
                 /* @ts-ignore */
@@ -67,7 +61,7 @@ const listOfFilesSlice = createSlice({
             })
             .addCase(deleteFile.fulfilled, (state, action) => {
                 const files = JSON.parse(JSON.stringify(current(state.files))) as TFileFromServer[];
-                state.files = files.filter(file => file._id !== action.meta.arg);
+                state.files = files.filter(file => file._id !== action.meta.arg.fileId);
             })
     }
 });
