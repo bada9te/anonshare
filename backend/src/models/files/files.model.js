@@ -39,7 +39,7 @@ const getFilesByOwner = async(ownerId) => {
 }
 
 const getFileById = async(id) => {
-    return await MFile.findOneById(id);
+    return await MFile.findById(id);
 }
 
 
