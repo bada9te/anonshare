@@ -5,9 +5,11 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { refreshToken } from "./components/baseSlice";
 import { UnknownAction } from "@reduxjs/toolkit";
+import DownloadPAGE from "./pages/DownloadPAGE";
 
 const router = createBrowserRouter([
     { path: '/',  element: <ListOfFilesPAGE/>},
+    { path: '/download/:id', element: <DownloadPAGE/>},
 ]);
 
 function App() {  

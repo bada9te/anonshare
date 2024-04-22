@@ -12,7 +12,7 @@ const fileShareModalSlice = createSlice({
     reducers: {
         setIsShowing: (state, action) => {
             state.isShowing = action.payload;
-        }
+        },
     }
 });
 

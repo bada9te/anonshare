@@ -21,6 +21,7 @@ export default function ShareForm() {
         //console.log(selectedFileId)
         dispath(updatePassPhrase({ pass: data.PassPharase, fileId: selectedFileId }) as unknown as UnknownAction);
         dispath(setIsShowing(false));
+        alert(`http://localhost:3000/download/${selectedFileId}`)
     }
 
     return (

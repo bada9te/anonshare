@@ -8,7 +8,7 @@ import { setIsShowing } from '../file-share-modal/fileShareModalSlice';
 import { setSelectedFileId } from '../baseSlice';
 import { deleteFile } from '../list-of-files/listOfFilesSlice';
 import { UnknownAction } from '@reduxjs/toolkit';
-
+import { setIsShowing as setDownlaodModalIsShowing, setFileName, setPassword } from "../file-download-modal/fileDownloadModalSlice";
     
 
 export default function FileComponent(props: {
@@ -29,6 +29,13 @@ export default function FileComponent(props: {
         dispatch(deleteFile({fileId: _id, name}) as unknown as UnknownAction);
     }
 
+    const handleFileDownload = () => {
+        console.log('download')
+        dispatch(setDownlaodModalIsShowing(true));
+        dispatch(setFileName(name));
+        dispatch(setPassword(password || ""));
+    }
+
 
     return (
         <Card sx={{ minWidth: 290 }}>
@@ -47,7 +54,7 @@ export default function FileComponent(props: {
             </Typography>
         </CardContent>
         <CardActions>
-            <Button variant='contained' color='primary' size="small" href={`${process.env.REACT_APP_SERVER_BASE}/files/download?name=${name}`}>Download</Button>
+            <Button variant='contained' color='primary' size="small" onClick={handleFileDownload}>Download</Button>
             <Button variant='contained' color='error' size="small" onClick={handleFileDelete}>Delete</Button>
             <Button variant='contained' color='secondary' size="small" onClick={handleFileShare}>Share</Button>
         </CardActions>

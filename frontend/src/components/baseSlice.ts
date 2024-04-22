@@ -11,6 +11,7 @@ const initialState = {
     },
     accessToken: "",
     selectedFileId: "",
+    selectedFileName: "",
 }
 
 export const registerUser = createAsyncThunk(
@@ -44,7 +45,7 @@ const baseSlice = createSlice({
         },
         setSelectedFileId: (state, action) => {
             state.selectedFileId = action.payload;
-        }
+        },
     },
     extraReducers: (builder) => {
         builder

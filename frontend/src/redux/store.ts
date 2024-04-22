@@ -4,6 +4,7 @@ import loginRegisterModalReducer from "../components/login-register-modal/loginR
 import fileUploadModalReducer from "../components/file-upload-modal/fileUploadModalSlice";
 import listOfFilesReducer from "../components/list-of-files/listOfFilesSlice";
 import fileShareModalReducer from "../components/file-share-modal/fileShareModalSlice";
+import fileDownloadModalReducer from "../components/file-download-modal/fileDownloadModalSlice";
 
 const store = configureStore({
     reducer: {
@@ -11,7 +12,8 @@ const store = configureStore({
         authModal: loginRegisterModalReducer,
         uploadModal: fileUploadModalReducer,
         listOfFiles: listOfFilesReducer,
-        shareModal: fileShareModalReducer
+        shareModal: fileShareModalReducer,
+        downloadModal: fileDownloadModalReducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }),
     devTools: true,

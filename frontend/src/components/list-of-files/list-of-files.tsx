@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import { fetchListOfFiles } from "./listOfFilesSlice";
 import { UnknownAction } from "@reduxjs/toolkit";
 import { TFileFromServer } from "./types";
+import FileDownloadModal from "../file-download-modal/file-download-modal";
 
 
 
@@ -35,6 +36,7 @@ export default function ListOfFiles() {
                 userId.length > 0
                 ?
                 <>
+                    <FileDownloadModal/>
                     <FileUploadModal isLoggedIn={accessToken.length > 0}/>
                     <FileShareModal/>
                     <Stack p={3} flexWrap="wrap" gap={3} display="flex" justifyContent="center" alignItems="space-around" flexDirection="row">
