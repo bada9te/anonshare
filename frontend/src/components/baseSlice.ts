@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { httpCreateUser, httpGetNewToken, httploginUser } from "../requests/user.requests";
+import { httpCreateUser, httpGetNewToken, httpLogoutUser, httploginUser } from "../requests/user.requests";
 import Cookies from 'js-cookie';
 
 
@@ -35,6 +35,13 @@ export const refreshToken = createAsyncThunk(
     }
 );
 
+export const logoutUser = createAsyncThunk(
+    'BASE_SLICE/logout',
+    async(token: string) => {
+        return await httpLogoutUser(token);
+    }
+);
+
 
 const baseSlice = createSlice({
     name: "BASE_SLICE",
@@ -59,6 +66,11 @@ const baseSlice = createSlice({
                 /* @ts-ignore */
                 state.user = action.payload.data.user;
                 state.accessToken = action.payload.data.token;
+            })
+            .addCase(logoutUser.fulfilled, (state, action) => {
+                state = initialState;
+                Cookies.remove("token");
+                window.location.reload();
             });
     }
 });

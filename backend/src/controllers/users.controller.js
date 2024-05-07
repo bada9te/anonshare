@@ -102,7 +102,7 @@ const logoutUser = async(req, res, next) => {
             });
         }
 
-        await usersModel.setRefreshTokenById(null);
+        await usersModel.setRefreshTokenById(user._id, null);
         return res.status(200).json({
             ok: true,
         });

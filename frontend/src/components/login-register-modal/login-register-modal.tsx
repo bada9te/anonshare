@@ -11,6 +11,9 @@ import RegisterForm from "../register-form/register-form";
 import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../../redux/store";
 import { setIsShowing } from "./loginRegisterModalSlice";
+import { UnknownAction } from "@reduxjs/toolkit";
+import { logoutUser } from "../baseSlice";
+import Cookies from "js-cookie";
 
 
 
@@ -29,6 +32,10 @@ export default function LoginRegisterModal(props: {
     const handleChange = (event: React.SyntheticEvent, newValue: string) => {
         setValue(newValue);
     };
+
+    const handleLogoutUser = () => {
+        dispatch(logoutUser(Cookies.get("token") as string) as unknown as UnknownAction);
+    }
 
     return (
         <>
@@ -56,7 +63,7 @@ export default function LoginRegisterModal(props: {
                     isLoggedIn
                     ?
                     <DialogContent>
-                        <Button variant="contained">Logout</Button>
+                        <Button variant="contained" onClick={handleLogoutUser}>Logout</Button>
                     </DialogContent>
                     :
                     <TabContext value={value}>
@@ -69,7 +76,6 @@ export default function LoginRegisterModal(props: {
                         <TabPanel value="1"><LoginForm/></TabPanel>
                         <TabPanel value="2"><RegisterForm/></TabPanel>
                     </TabContext>
-                    
                 }
             </Dialog>
         </>
